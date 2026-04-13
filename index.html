@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JËLIKÖ | Marketplace Premium – Dakar</title>
-    <meta name="description" content="JËLIKÖ – Votre marketplace premium à Dakar : iPhones, Ordinateurs, Maisons, et bien plus. Meilleurs prix avec garantie.">
+    <title>Baraka Business | Marketplace Premium </title>
+    <meta name="description" content="Baraka Business – Votre marketplace premium à Thiès, Dakar partout au Sénégal: iPhones, Ordinateurs, Terrains, Moutons, Divers Maisons, et bien plus. Meilleurs prix avec garantie.">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -135,14 +135,20 @@
             display: flex; align-items: center; gap: 14px; flex-shrink: 0;
         }
         .logo-box {
+            /* background-image: url('images/barakalogo.jpg'); */
             background: linear-gradient(135deg, #3B82F6, #8B5CF6);
             padding: 10px; border-radius: 14px;
-            animation: floatLogo 6s ease-in-out infinite;
+            /* animation: floatLogo 6s ease-in-out infinite; */
         }
         .logo-box-inner {
             width: 36px; height: 36px; background: white; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
             color: #3B82F6; font-weight: 900; font-size: 0.9rem; letter-spacing: -1px;
+        }
+        .logo-image {
+            width: 64px; height: 64px; border-radius: 50%;
+            object-fit: cover; display: block;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
         @keyframes floatLogo {
             0%,100% { transform: translateY(0); }
@@ -512,11 +518,9 @@
     <nav id="topNav">
         <div class="nav-inner">
             <div class="logo-wrap">
-                <div class="logo-box">
-                    <div class="logo-box-inner">JLK</div>
-                </div>
+                <img src="images/barakalogo.jpg" alt="Baraka Business Logo" class="logo-image">
                 <div>
-                    <div class="logo-text-main">JËLIKÖ</div>
+                    <div class="logo-text-main">Baraka Business</div>
                     <div class="logo-text-sub">Marketplace Premium</div>
                 </div>
             </div>
