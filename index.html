@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JËLIKÖ | Marketplace Premium – Dakar</title>
+    <meta name="description" content="JËLIKÖ – Votre marketplace premium à Dakar : iPhones, Ordinateurs, Maisons, et bien plus. Meilleurs prix avec garantie.">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* ========================
+           ROOT VARIABLES
+        ======================== */
+        :root {
+            --primary: #3B82F6; 
+            --primary-dark: #2563EB;
+            --secondary: #8B5CF6;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --dark: #0F172A;
+            --darker: #020617;
+            --mid: #1E293B;
+            --light: #F8FAFC;
+            --nav-h: 80px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ========================
+           GLASS EFFECTS
+        ======================== */
+        .glass {
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+        }
+        .glass-strong {
+            background: rgba(255,255,255,0.11);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        }
+
+        /* ========================
+           BUTTONS
+        ======================== */
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            color: white; padding: 14px 28px; border-radius: 14px;
+            font-weight: 600; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            border: none; cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 8px 25px rgba(59,130,246,0.3); font-size: 0.95rem;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.5s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(59,130,246,0.5); }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white; padding: 14px 28px; border-radius: 14px;
+            font-weight: 600; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: all 0.4s ease; border: none; cursor: pointer;
+            box-shadow: 0 8px 25px rgba(16,185,129,0.3); font-size: 0.95rem;
+        }
+        .btn-secondary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(16,185,129,0.5); }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+            color: white; padding: 10px 20px; border-radius: 10px;
+            font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+            transition: all 0.3s ease; border: none; cursor: pointer; font-size: 0.875rem;
+        }
+        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(239,68,68,0.4); }
+
+        .btn-glass {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px); color: white;
+            padding: 12px 24px; border-radius: 12px; font-weight: 600;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn-glass:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+
+        .btn-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            color: white; display: inline-flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem;
+        }
+        .btn-icon:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+        .btn-icon.danger:hover { background: rgba(239,68,68,0.3); border-color: rgba(239,68,68,0.5); }
+        .btn-icon.edit:hover { background: rgba(59,130,246,0.3); border-color: rgba(59,130,246,0.5); }
+
+        /* ========================
+           TOP NAV
+        ======================== */
+        #topNav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            height: var(--nav-h); transition: all 0.3s ease;
+        }
+        #topNav.scrolled {
+            background: rgba(15,23,42,0.85);
+            backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .nav-inner {
+            max-width: 1440px; margin: 0 auto;
+            padding: 0 24px; height: 100%;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo-wrap {
+            display: flex; align-items: center; gap: 14px; flex-shrink: 0;
+        }
+        .logo-box {
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            padding: 10px; border-radius: 14px;
+            animation: floatLogo 6s ease-in-out infinite;
+        }
+        .logo-box-inner {
+            width: 36px; height: 36px; background: white; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #3B82F6; font-weight: 900; font-size: 0.9rem; letter-spacing: -1px;
+        }
+        @keyframes floatLogo {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .logo-text-main { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.5px; }
+        .logo-text-sub { font-size: 0.7rem; opacity: 0.6; }
+
+        /* Page tabs in nav */
+        .nav-tabs {
+            display: flex; align-items: center; gap: 4px;
+            overflow-x: auto; scrollbar-width: none; flex: 1;
+            padding: 0 24px; justify-content: center;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .nav-tab {
+            padding: 9px 18px; border-radius: 30px; font-weight: 600; font-size: 0.875rem;
+            cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
+            border: none; background: transparent; color: rgba(255,255,255,0.65);
+            display: flex; align-items: center; gap: 7px;
+        }
+        .nav-tab:hover { color: white; background: rgba(255,255,255,0.08); }
+        .nav-tab.active {
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            color: white; box-shadow: 0 4px 20px rgba(59,130,246,0.4);
+        }
+        .nav-tab .tab-emoji { font-size: 1rem; }
+        .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+        /* ========================
+           PAGE LAYOUT
+        ======================== */
+        #app { padding-top: var(--nav-h); min-height: 100vh; }
+
+        /* pages */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ========================
+           HERO (per page)
+        ======================== */
+        .page-hero {
+            position: relative; padding: 80px 24px 60px;
+            overflow: hidden; text-align: center;
+        }
+        .page-hero-bg {
+            position: absolute; inset: 0;
+            background-size: 400% 400%;
+            animation: gradShift 18s ease infinite;
+        }
+        @keyframes gradShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .page-hero-overlay {
+            position: absolute; inset: 0;
+            background: rgba(15,23,42,0.55);
+        }
+        .page-hero .orb {
+            position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.45;
+        }
+        .page-hero-content { position: relative; z-index: 2; }
+        .page-hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; margin-bottom: 12px; line-height: 1.05; }
+        .page-hero p { font-size: 1.15rem; opacity: 0.85; max-width: 600px; margin: 0 auto 28px; }
+
+        /* ========================
+           FILTERS
+        ======================== */
+        .filters-bar {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 10px; padding: 24px; max-width: 1440px; margin: 0 auto;
+        }
+        .filter-btn {
+            padding: 10px 22px; border-radius: 30px; font-weight: 600; font-size: 0.875rem;
+            border: 1.5px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.05); color: white;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .filter-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            border-color: transparent; box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+        }
+
+        /* ========================
+           PRODUCT GRID & CARDS
+        ======================== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px; padding: 10px 24px 60px;
+            max-width: 1440px; margin: 0 auto;
+        }
+        .product-card {
+            border-radius: 22px; overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+        }
+        .product-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08));
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .product-card:hover::before { opacity: 1; }
+        .product-card:hover { transform: translateY(-10px) scale(1.015); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+        .card-img-wrap { position: relative; height: 260px; overflow: hidden; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .product-card:hover .card-img-wrap img { transform: scale(1.08); }
+
+        .card-badge {
+            position: absolute; top: 14px; right: 14px;
+            background: linear-gradient(135deg, #F59E0B, #EF4444);
+            color: white; padding: 6px 14px; border-radius: 10px;
+            font-size: 0.8rem; font-weight: 700; z-index: 5;
+            box-shadow: 0 4px 14px rgba(245,158,11,0.4);
+        }
+        .card-badge.green { background: linear-gradient(135deg, #10B981, #059669); box-shadow: 0 4px 14px rgba(16,185,129,0.4); }
+        .card-badge.purple { background: linear-gradient(135deg, #8B5CF6, #6D28D9); box-shadow: 0 4px 14px rgba(139,92,246,0.4); }
+        .card-badge.cyan { background: linear-gradient(135deg, #06B6D4, #0284C7); box-shadow: 0 4px 14px rgba(6,182,212,0.4); }
+        .card-badge.pink { background: linear-gradient(135deg, #EC4899, #BE185D); box-shadow: 0 4px 14px rgba(236,72,153,0.4); }
+
+        .card-body { padding: 22px; }
+        .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; }
+        .card-sub {
+            display: inline-block; background: rgba(16,185,129,0.2);
+            color: #34D399; padding: 4px 12px; border-radius: 8px;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 14px;
+        }
+        .card-price {
+            font-size: 1.7rem; font-weight: 800;
+            background: linear-gradient(135deg, #10B981, #059669);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 14px;
+        }
+        .card-features { margin-bottom: 18px; display: flex; flex-direction: column; gap: 5px; }
+        .card-feature { font-size: 0.82rem; opacity: 0.85; display: flex; align-items: center; gap: 7px; }
+        .card-feature i { color: #34D399; font-size: 0.75rem; }
+        .card-actions { display: flex; gap: 8px; }
+        .card-actions .btn-primary { flex: 1; justify-content: center; padding: 12px; font-size: 0.875rem; }
+
+        /* Admin edit controls overlay */
+        .card-admin-controls {
+            position: absolute; top: 14px; left: 14px; z-index: 10;
+            display: flex; gap: 6px;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .product-card:hover .card-admin-controls { opacity: 1; }
+
+        /* Empty state */
+        .empty-state {
+            grid-column: 1/-1; text-align: center; padding: 80px 20px;
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+        }
+        .empty-state-icon {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 2rem;
+        }
+        .empty-state h3 { font-size: 1.4rem; font-weight: 700; opacity: 0.8; }
+        .empty-state p { opacity: 0.55; max-width: 340px; }
+
+        /* ========================
+           MODAL (product details)
+        ======================== */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.82);
+            backdrop-filter: blur(10px); display: none;
+            align-items: center; justify-content: center;
+            z-index: 3000; padding: 20px; overflow-y: auto;
+        }
+        .modal-overlay.shown { display: flex; }
+        .modal-box {
+            background: linear-gradient(135deg, #1E293B, #334155);
+            border-radius: 28px; max-width: 1100px; width: 100%;
+            max-height: 90vh; overflow-y: auto; position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-close {
+            position: absolute; top: 20px; right: 20px;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: white; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; z-index: 10; font-size: 1.1rem;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+        .modal-inner { padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        @media (max-width: 768px) { .modal-inner { grid-template-columns: 1fr; } }
+        .modal-img { width: 100%; border-radius: 20px; object-fit: cover; max-height: 380px; }
+
+        /* ========================
+           ADMIN PANEL
+        ======================== */
+        .admin-panel {
+            position: fixed; top: 0; right: -520px; width: 520px; max-width: 100vw;
+            height: 100vh; background: linear-gradient(160deg, #0F172A, #1E293B);
+            border-left: 1px solid rgba(255,255,255,0.12);
+            z-index: 2000; transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .admin-panel.open { right: 0; }
+        .admin-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px); z-index: 1999;
+            display: none; opacity: 0; transition: opacity 0.3s;
+        }
+        .admin-overlay.shown { display: block; opacity: 1; }
+
+        .admin-header {
+            padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .admin-header-title { display: flex; align-items: center; gap: 12px; }
+        .admin-header-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+        }
+        .admin-tabs {
+            display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+        }
+        .admin-tab {
+            flex: 1; padding: 14px; text-align: center; font-weight: 600;
+            font-size: 0.875rem; cursor: pointer; transition: all 0.3s;
+            color: rgba(255,255,255,0.5); border: none; background: transparent;
+        }
+        .admin-tab.active { color: white; border-bottom: 2px solid #3B82F6; }
+        .admin-tab-content { display: none; flex: 1; overflow-y: auto; padding: 20px; }
+        .admin-tab-content.active { display: flex; flex-direction: column; gap: 14px; }
+
+        /* Form */
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.8rem; font-weight: 600; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-control {
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 10px; padding: 11px 14px; color: white; font-size: 0.9rem;
+            font-family: 'Inter', sans-serif; transition: border-color 0.3s;
+            width: 100%;
+        }
+        .form-control:focus { outline: none; border-color: #3B82F6; background: rgba(59,130,246,0.07); }
+        .form-control::placeholder { color: rgba(255,255,255,0.3); }
+        select.form-control option { background: #1E293B; color: white; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .admin-badge-selector { display: flex; flex-wrap: wrap; gap: 8px; }
+        .badge-option {
+            padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; border: 1.5px solid transparent; transition: all 0.2s;
+            opacity: 0.6;
+        }
+        .badge-option.selected { opacity: 1; border-color: white; box-shadow: 0 3px 12px rgba(0,0,0,0.3); }
+        .badge-option.orange { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+        .badge-option.green { background: linear-gradient(135deg, #10B981, #059669); }
+        .badge-option.purple { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+        .badge-option.cyan { background: linear-gradient(135deg, #06B6D4, #0284C7); }
+        .badge-option.pink { background: linear-gradient(135deg, #EC4899, #BE185D); }
+
+        /* Admin list */
+        .admin-item-list { display: flex; flex-direction: column; gap: 10px; }
+        .admin-item {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 14px; display: flex; align-items: center; gap: 12px;
+        }
+        .admin-item-img {
+            width: 55px; height: 55px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+        }
+        .admin-item-img-placeholder {
+            width: 55px; height: 55px; border-radius: 10px; flex-shrink: 0;
+            background: rgba(255,255,255,0.08); display: flex; align-items: center;
+            justify-content: center; font-size: 1.4rem;
+        }
+        .admin-item-info { flex: 1; min-width: 0; }
+        .admin-item-name { font-weight: 700; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .admin-item-meta { font-size: 0.78rem; opacity: 0.55; }
+        .admin-item-price { font-weight: 800; font-size: 0.9rem; color: #34D399; }
+        .admin-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+        .admin-category-filter {
+            display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px;
+        }
+        .cat-pill {
+            padding: 6px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+            border: 1.5px solid rgba(255,255,255,0.18); background: transparent; color: white;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .cat-pill.active { background: linear-gradient(135deg, #3B82F6, #8B5CF6); border-color: transparent; }
+
+        /* ========================
+           CONTACT SECTION
+        ======================== */
+        .contact-section { padding: 60px 24px; max-width: 900px; margin: 0 auto; }
+        .contact-wrap { padding: 40px; border-radius: 24px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+        @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+        .contact-card {
+            padding: 28px 20px; border-radius: 18px; text-align: center;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .contact-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-5px); }
+        .contact-icon {
+            width: 66px; height: 66px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.7rem; margin: 0 auto 16px;
+        }
+        .contact-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+        /* ========================
+           SCROLL
+        ======================== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #3B82F6, #8B5CF6); border-radius: 8px; }
+
+        /* ========================
+           RESPONSIVE NAV
+        ======================== */
+        @media (max-width: 900px) {
+            .nav-tabs { padding: 0 12px; gap: 2px; }
+            .nav-tab { padding: 8px 12px; font-size: 0.8rem; }
+        }
+        @media (max-width: 600px) {
+            .logo-text-main { font-size: 1.2rem; }
+            .nav-tab .tab-label { display: none; }
+            .nav-tab { padding: 8px 10px; }
+        }
+
+        /* ========================
+           TOAST NOTIFICATION
+        ======================== */
+        #toast {
+            position: fixed; bottom: 30px; right: 30px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white; padding: 14px 24px; border-radius: 14px;
+            font-weight: 600; font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(16,185,129,0.4);
+            z-index: 9999; transform: translateY(80px); opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            display: flex; align-items: center; gap: 10px;
+        }
+        #toast.show { transform: translateY(0); opacity: 1; }
+        #toast.error { background: linear-gradient(135deg, #EF4444, #B91C1C); box-shadow: 0 10px 30px rgba(239,68,68,0.4); }
+
+        /* ========================
+           ANIMATIONS
+        ======================== */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-slide-up { animation: fadeSlideUp 0.5s ease-out forwards; }
+
+        /* Page-specific hero gradients */
+        .hero-iphones  { background: linear-gradient(135deg, #1E3A8A, #7C3AED, #DB2777); }
+        .hero-computers{ background: linear-gradient(135deg, #0C4A6E, #0369A1, #0891B2); }
+        .hero-homes    { background: linear-gradient(135deg, #064E3B, #047857, #10B981); }
+        .hero-divers   { background: linear-gradient(135deg, #4C1D95, #7C3AED, #C026D3); }
+        .hero-autres   { background: linear-gradient(135deg, #7C2D12, #C2410C, #F59E0B); }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============== TOP NAV ============== -->
+    <nav id="topNav">
+        <div class="nav-inner">
+            <div class="logo-wrap">
+                <div class="logo-box">
+                    <div class="logo-box-inner">JLK</div>
+                </div>
+                <div>
+                    <div class="logo-text-main">JËLIKÖ</div>
+                    <div class="logo-text-sub">Marketplace Premium</div>
+                </div>
+            </div>
+
+            <div class="nav-tabs" id="navTabs">
+                <button class="nav-tab active" data-page="iphones" id="tab-iphones">
+                    <span class="tab-emoji">📱</span><span class="tab-label">iPhones</span>
+                </button>
+                <button class="nav-tab" data-page="computers" id="tab-computers">
+                    <span class="tab-emoji">💻</span><span class="tab-label">Ordinateurs</span>
+                </button>
+                <button class="nav-tab" data-page="homes" id="tab-homes">
+                    <span class="tab-emoji">🏠</span><span class="tab-label">Maisons</span>
+                </button>
+                <button class="nav-tab" data-page="divers" id="tab-divers">
+                    <span class="tab-emoji">🎁</span><span class="tab-label">Divers</span>
+                </button>
+                <button class="nav-tab" data-page="autres" id="tab-autres">
+                    <span class="tab-emoji">✨</span><span class="tab-label">Autres</span>
+                </button>
+                <button class="nav-tab" data-page="contact" id="tab-contact">
+                    <span class="tab-emoji">📞</span><span class="tab-label">Contact</span>
+                </button>
+            </div>
+
+            <!-- <div class="nav-right">
+                <button class="btn-glass" id="openAdminBtn" title="Panneau Admin">
+                    <i class="fas fa-sliders"></i>
+                    <span style="font-size:0.85rem">Admin</span>
+                </button>
+            </div> -->
+        </div>
+    </nav>
+
+    <!-- ============== MAIN APP ============== -->
+    <div id="app">
+
+        <!-- ========== PAGE: iPHONES ========== -->
+        <div class="page active" id="page-iphones">
+            <div class="page-hero">
+                <div class="page-hero-bg hero-iphones"></div>
+                <div class="page-hero-overlay"></div>
+                <div class="orb" style="width:350px;height:350px;background:#3B82F6;top:-80px;left:-80px;"></div>
+                <div class="orb" style="width:250px;height:250px;background:#8B5CF6;bottom:-60px;right:-60px;"></div>
+                <div class="page-hero-content">
+                    <h1>📱 <span style="background:linear-gradient(135deg,#93C5FD,#C4B5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">iPhones</span></h1>
+                    <p>Collection premium d'iPhones reconditionnés avec garantie à Dakar</p>
+                </div>
+            </div>
+
+            <div class="filters-bar" id="iphone-filters">
+                <button class="filter-btn active" data-filter="all">Tous les Modèles</button>
+                <button class="filter-btn" data-filter="xr">iPhone XR</button>
+                <button class="filter-btn" data-filter="11">iPhone 11</button>
+                <button class="filter-btn" data-filter="12">iPhone 12</button>
+                <button class="filter-btn" data-filter="13">iPhone 13</button>
+                <button class="filter-btn" data-filter="14">iPhone 14</button>
+            </div>
+            <div class="product-grid" id="grid-iphones"></div>
+        </div>
+
+        <!-- ========== PAGE: ORDINATEURS ========== -->
+        <div class="page" id="page-computers">
+            <div class="page-hero">
+                <div class="page-hero-bg hero-computers"></div>
+                <div class="page-hero-overlay"></div>
+                <div class="orb" style="width:300px;height:300px;background:#0284C7;top:-60px;right:5%;"></div>
+                <div class="page-hero-content">
+                    <h1>💻 <span style="background:linear-gradient(135deg,#67E8F9,#A5F3FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Ordinateurs</span></h1>
+                    <p>Laptops, desktops & stations gaming — neufs et reconditionnés</p>
+                </div>
+            </div>
+
+            <div class="filters-bar" id="computer-filters">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="laptop">Portables</button>
+                <button class="filter-btn" data-filter="desktop">Bureau</button>
+                <button class="filter-btn" data-filter="gaming">Gaming</button>
+            </div>
+            <div class="product-grid" id="grid-computers"></div>
+        </div>
+
+        <!-- ========== PAGE: MAISONS ========== -->
+        <div class="page" id="page-homes">
+            <div class="page-hero">
+                <div class="page-hero-bg hero-homes"></div>
+                <div class="page-hero-overlay"></div>
+                <div class="orb" style="width:320px;height:320px;background:#059669;bottom:-80px;left:10%;"></div>
+                <div class="page-hero-content">
+                    <h1>🏠 <span style="background:linear-gradient(135deg,#6EE7B7,#A7F3D0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Maisons</span></h1>
+                    <p>Villas, appartements à vendre et à louer à Dakar et ses environs</p>
+                </div>
+            </div>
+
+            <div class="filters-bar" id="home-filters">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="sale">À Vendre</button>
+                <button class="filter-btn" data-filter="rent">À Louer</button>
+                <button class="filter-btn" data-filter="villa">Villas</button>
+                <button class="filter-btn" data-filter="apartment">Appartements</button>
+            </div>
+            <div class="product-grid" id="grid-homes"></div>
+        </div>
+
+        <!-- ========== PAGE: DIVERS ========== -->
+        <div class="page" id="page-divers">
+            <div class="page-hero">
+                <div class="page-hero-bg hero-divers"></div>
+                <div class="page-hero-overlay"></div>
+                <div class="orb" style="width:280px;height:280px;background:#7C3AED;top:-50px;left:20%;"></div>
+                <div class="page-hero-content">
+                    <h1>🎁 <span style="background:linear-gradient(135deg,#C4B5FD,#F0ABFC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Divers</span></h1>
+                    <p>Accessoires, gadgets, électronique et bien d'autres produits</p>
+                </div>
+            </div>
+
+            <div class="filters-bar" id="divers-filters">
+                <button class="filter-btn active" data-filter="all">Tout voir</button>
+                <button class="filter-btn" data-filter="accessoire">Accessoires</button>
+                <button class="filter-btn" data-filter="gadget">Gadgets</button>
+                <button class="filter-btn" data-filter="electronique">Électronique</button>
+                <button class="filter-btn" data-filter="autre">Autres</button>
+            </div>
+            <div class="product-grid" id="grid-divers"></div>
+        </div>
+
+        <!-- ========== PAGE: AUTRES ========== -->
+        <div class="page" id="page-autres">
+            <div class="page-hero">
+                <div class="page-hero-bg hero-autres"></div>
+                <div class="page-hero-overlay"></div>
+                <div class="orb" style="width:300px;height:300px;background:#C2410C;top:-70px;right:5%;"></div>
+                <div class="page-hero-content">
+                    <h1>✨ <span style="background:linear-gradient(135deg,#FDE68A,#FCD34D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Autres</span></h1>
+                    <p>Services, offres spéciales et annonces diverses de la communauté</p>
+                </div>
+            </div>
+
+            <div class="filters-bar" id="autres-filters">
+                <button class="filter-btn active" data-filter="all">Tout voir</button>
+                <button class="filter-btn" data-filter="service">Services</button>
+                <button class="filter-btn" data-filter="offre">Offres</button>
+                <button class="filter-btn" data-filter="annonce">Annonces</button>
+            </div>
+            <div class="product-grid" id="grid-autres"></div>
+        </div>
+
+        <!-- ========== PAGE: CONTACT ========== -->
+        <div class="page" id="page-contact">
+            <div class="page-hero" style="min-height:280px;">
+                <div class="page-hero-bg hero-iphones"></div>
+                <div class="page-hero-overlay"></div>
+                <div class="page-hero-content">
+                    <h1>📞 <span style="background:linear-gradient(135deg,#FCA5A5,#F87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Contact</span></h1>
+                    <p>Commandez en toute confiance — réponse rapide garantie</p>
+                </div>
+            </div>
+
+            <section class="contact-section">
+                <div class="contact-wrap glass-strong">
+                    <div class="contact-grid">
+                        <div class="contact-card glass">
+                            <div class="contact-icon" style="background:linear-gradient(135deg,#3B82F6,#06B6D4);">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px;">Téléphone</div>
+                            <div style="font-size:1.5rem;font-weight:900;">77 468 86 56</div>
+                        </div>
+                        <div class="contact-card glass">
+                            <div class="contact-icon" style="background:linear-gradient(135deg,#10B981,#059669);">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px;">WhatsApp</div>
+                            <div style="font-size:1.5rem;font-weight:900;">76 196 72 08</div>
+                        </div>
+                        <div class="contact-card glass">
+                            <div class="contact-icon" style="background:linear-gradient(135deg,#8B5CF6,#EC4899);">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div style="font-weight:700;font-size:1.05rem;margin-bottom:6px;">Email</div>
+                            <div style="font-size:1rem;font-weight:700;">servicejeliko@email.com</div>
+                        </div>
+                    </div>
+                    <div class="contact-actions">
+                        <a href="tel:+221774688656" class="btn-primary">
+                            <i class="fas fa-phone"></i> Appeler Maintenant
+                        </a>
+                        <a href="https://wa.me/221761967208" class="btn-secondary">
+                            <i class="fab fa-whatsapp"></i> Commander sur WhatsApp
+                        </a>
+                        <a href="https://chat.whatsapp.com/KyFtBFoG0KLKFJ22YipaDb" class="btn-glass">
+                            <i class="fas fa-users"></i> Groupe WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div><!-- /app -->
+
+    <!-- ============== PRODUCT DETAIL MODAL ============== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-box glass-strong">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal-inner" id="modalInner"></div>
+        </div>
+    </div>
+
+    <!-- ============== ADMIN PANEL ============== -->
+    <div class="admin-overlay" id="adminOverlay"></div>
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <div class="admin-header-title">
+                <div class="admin-header-icon"><i class="fas fa-sliders"></i></div>
+                <div>
+                    <div style="font-weight:800;font-size:1.1rem;">Panneau Admin</div>
+                    <div style="font-size:0.75rem;opacity:0.55;">Gestion des annonces</div>
+                </div>
+            </div>
+            <button class="btn-icon" id="closeAdminBtn"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-atab="add"><i class="fas fa-plus"></i> Ajouter</button>
+            <button class="admin-tab" data-atab="manage"><i class="fas fa-list"></i> Gérer</button>
+        </div>
+
+        <!-- ADD TAB -->
+        <div class="admin-tab-content active" id="atab-add">
+            <div class="form-group">
+                <label>Catégorie de page</label>
+                <select class="form-control" id="admin-page">
+                    <option value="iphones">📱 iPhones</option>
+                    <option value="computers">💻 Ordinateurs</option>
+                    <option value="homes">🏠 Maisons</option>
+                    <option value="divers">🎁 Divers</option>
+                    <option value="autres">✨ Autres</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Titre / Nom</label>
+                    <input type="text" class="form-control" id="admin-title" placeholder="Ex: iPhone 15 Pro">
+                </div>
+                <div class="form-group">
+                    <label>Sous-titre / Specs</label>
+                    <input type="text" class="form-control" id="admin-sub" placeholder="Ex: 256Go">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Prix (FCFA)</label>
+                <input type="number" class="form-control" id="admin-price" placeholder="Ex: 200000">
+            </div>
+
+            <div class="form-group">
+                <label>Filtre / Sous-catégorie</label>
+                <input type="text" class="form-control" id="admin-filter" placeholder="Ex: 15 / laptop / villa / gadget">
+                <span style="font-size:0.75rem;opacity:0.5;margin-top:4px;">Utilisé pour les filtres de la page</span>
+            </div>
+
+            <div class="form-group">
+                <label>URL de l'image</label>
+                <input type="url" class="form-control" id="admin-img" placeholder="https://…">
+            </div>
+
+            <div class="form-group">
+                <label>Description / Détails</label>
+                <textarea class="form-control" id="admin-desc" rows="3" placeholder="Description du produit…" style="resize:vertical;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Couleur du badge</label>
+                <div class="admin-badge-selector" id="badgeSelector">
+                    <div class="badge-option orange selected" data-badge="orange">Populaire</div>
+                    <div class="badge-option green" data-badge="green">Neuf</div>
+                    <div class="badge-option purple" data-badge="purple">Premium</div>
+                    <div class="badge-option cyan" data-badge="cyan">Promo</div>
+                    <div class="badge-option pink" data-badge="pink">Exclusif</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Texte du badge</label>
+                <input type="text" class="form-control" id="admin-badge-text" placeholder="Ex: Promo, Neuf, Stock limité…">
+            </div>
+
+            <div class="form-group">
+                <label>Options incluses (une par ligne)</label>
+                <textarea class="form-control" id="admin-features" rows="3" placeholder="Garantie 3 mois&#10;Livraison gratuite&#10;État comme neuf" style="resize:vertical;"></textarea>
+            </div>
+
+            <button class="btn-primary" id="saveCardBtn" style="width:100%;justify-content:center;padding:16px;">
+                <i class="fas fa-save"></i> Enregistrer l'annonce
+            </button>
+        </div>
+
+        <!-- MANAGE TAB -->
+        <div class="admin-tab-content" id="atab-manage">
+            <div class="admin-category-filter" id="manageCatFilter">
+                <button class="cat-pill active" data-cat="all">Tous</button>
+                <button class="cat-pill" data-cat="iphones">📱</button>
+                <button class="cat-pill" data-cat="computers">💻</button>
+                <button class="cat-pill" data-cat="homes">🏠</button>
+                <button class="cat-pill" data-cat="divers">🎁</button>
+                <button class="cat-pill" data-cat="autres">✨</button>
+            </div>
+            <div class="admin-item-list" id="adminItemList"></div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Annonce ajoutée !</span></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // =====================================================
+        //  AOS
+        // =====================================================
+        AOS.init({ duration:700, once:true, offset:80 });
+
+        // =====================================================
+        //  NAV SCROLL EFFECT
+        // =====================================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('topNav').classList.toggle('scrolled', window.scrollY > 30);
+        });
+
+        // =====================================================
+        //  SEED DATA (default items, stored in localStorage)
+        // =====================================================
+        const SEED = [
+            // iPhones
+            { id:'s1',  page:'iphones',   title:'iPhone XR',       sub:'64Go',              price:87000,  filter:'xr',        badge:'orange', badgeText:'XR',          image:'https://i.pinimg.com/1200x/78/0b/31/780b31e1a86122677b16c69721a8db80.jpg', features:['Garantie 3 mois','Livraison gratuite','État comme neuf'], desc:'iPhone XR 64Go comme neuf avec chargeur et câble.'},
+            { id:'s2',  page:'iphones',   title:'iPhone XR',       sub:'128Go',             price:97000,  filter:'xr',        badge:'orange', badgeText:'XR',          image:'https://i.pinimg.com/736x/ae/ed/70/aeed70e2328577b9ffbd43b9cf594321.jpg', features:['Garantie 3 mois','Livraison gratuite','État comme neuf'], desc:'iPhone XR 128Go.'},
+            { id:'s3',  page:'iphones',   title:'iPhone 11',       sub:'128Go',             price:120000, filter:'11',        badge:'green',  badgeText:'11',          image:'https://i.pinimg.com/1200x/75/8c/43/758c43ec2cc4ef1fbcc8f71b27215ed6.jpg', features:['Garantie 3 mois','Livraison gratuite','État comme neuf'], desc:'iPhone 11 128Go.'},
+            { id:'s4',  page:'iphones',   title:'iPhone 11 Pro',   sub:'256Go',             price:148000, filter:'11',        badge:'purple', badgeText:'Pro',         image:'https://i.pinimg.com/1200x/88/f6/17/88f6177b5f8f19f411ce9b17de85cbb7.jpg', features:['Garantie 3 mois','Livraison gratuite','Boîte origine'], desc:'iPhone 11 Pro 256Go complet.'},
+            { id:'s5',  page:'iphones',   title:'iPhone 12',       sub:'128Go',             price:140000, filter:'12',        badge:'orange', badgeText:'12',          image:'https://i.pinimg.com/736x/87/4c/c0/874cc0e430051d548feddbabf2537885.jpg', features:['Garantie 3 mois','Livraison gratuite','5G compatible'], desc:'iPhone 12 128Go.'},
+            { id:'s6',  page:'iphones',   title:'iPhone 12 Pro',   sub:'256Go',             price:190000, filter:'12',        badge:'purple', badgeText:'Pro',         image:'https://i.pinimg.com/1200x/ce/5d/3a/ce5d3a3be730bb8f4e00adcc316b1b52.jpg', features:['Garantie 3 mois','5G','Triple caméra'], desc:'iPhone 12 Pro 256Go.'},
+            { id:'s7',  page:'iphones',   title:'iPhone 13',       sub:'128Go',             price:170000, filter:'13',        badge:'green',  badgeText:'13',          image:'https://i.pinimg.com/1200x/61/6c/c4/616cc4488ff01798a01c26069c90a3ff.jpg', features:['Garantie 3 mois','5G','Puce A15'], desc:'iPhone 13 128Go.'},
+            { id:'s8',  page:'iphones',   title:'iPhone 13 Pro',   sub:'256Go',             price:250000, filter:'13',        badge:'purple', badgeText:'Pro',         image:'https://i.pinimg.com/736x/c5/14/bc/c514bcab0e20d02bb1982f1aa5caa4de.jpg', features:['Garantie 3 mois','ProMotion 120Hz','Pro Camera'], desc:'iPhone 13 Pro 256Go.'},
+            { id:'s9',  page:'iphones',   title:'iPhone 14 Pro',   sub:'256Go',             price:340000, filter:'14',        badge:'pink',   badgeText:'Top',         image:'https://i.pinimg.com/736x/23/4d/23/234d23a552a37a09445c040f67e8ac87.jpg', features:['Garantie 3 mois','Dynamic Island','48MP Camera'], desc:'iPhone 14 Pro 256Go.'},
+
+            // Computers
+            { id:'s10', page:'computers', title:'MacBook Pro M3',  sub:'16GB RAM, 512GB',   price:1200000,filter:'laptop',    badge:'purple', badgeText:'Apple',       image:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600', features:['Puce M3','Batterie 22h','Écran Liquid Retina'], desc:'MacBook Pro M3 performant.'},
+            { id:'s11', page:'computers', title:'Dell XPS 15',     sub:'32GB, 1TB SSD',     price:950000, filter:'laptop',    badge:'cyan',   badgeText:'Dell',        image:'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600', features:['Intel i9','Écran OLED 4K','Design slim'], desc:'Dell XPS 15 premium.'},
+            { id:'s12', page:'computers', title:'HP Pavilion Gaming',sub:'16GB, RTX 3060',  price:750000, filter:'gaming',    badge:'orange', badgeText:'Gaming',      image:'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600', features:['RTX 3060','144Hz','RGB Keyboard'], desc:'HP Pavilion Gaming performant.'},
+            { id:'s13', page:'computers', title:'iMac 24" M3',     sub:'8GB, 256GB',        price:1100000,filter:'desktop',   badge:'purple', badgeText:'iMac',        image:'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600', features:['Puce M3','Écran 4.5K','Design all-in-one'], desc:'iMac 24 pouces M3.'},
+            { id:'s14', page:'computers', title:'ASUS ROG Strix',  sub:'32GB, RTX 4070',    price:1350000,filter:'gaming',    badge:'pink',   badgeText:'ROG',         image:'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600', features:['RTX 4070','240Hz','Cooling système'], desc:'ASUS ROG Strix gaming.'},
+
+            // Homes
+            { id:'s15', page:'homes',    title:'Villa Almadies',   sub:'4ch, 3SDB',         price:85000000,filter:'villa',   badge:'green',  badgeText:'À Vendre',    image:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600', features:['4 chambres','3 salles de bain','Jardin'], desc:'Superbe villa moderne aux Almadies.', type:'sale'},
+            { id:'s16', page:'homes',    title:'Appart Mermoz',    sub:'3ch, 2SDB',         price:250000, filter:'apartment',badge:'orange', badgeText:'À Louer',     image:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600', features:['Meublé','Gardiennage','Parking'], desc:'Bel appartement à Mermoz.', type:'rent'},
+            { id:'s17', page:'homes',    title:'Villa Piscine Ngor',sub:'5ch, piscine',     price:120000000,filter:'villa',  badge:'purple', badgeText:'Luxe',        image:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600', features:['Piscine','Jardin','Vue mer'], desc:'Villa de luxe à Ngor avec piscine.', type:'sale'},
+            { id:'s18', page:'homes',    title:'Studio Plateau',   sub:'1ch, meublé',       price:150000, filter:'apartment',badge:'cyan',   badgeText:'Studio',      image:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600', features:['Meublé','Clim','Eau & élec'], desc:'Studio moderne au Plateau.', type:'rent'},
+
+            // Divers
+            { id:'s19', page:'divers',   title:'AirPods Pro 2',    sub:'Réduction bruit',   price:95000,  filter:'accessoire',badge:'purple', badgeText:'Apple',       image:'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600', features:['ANC Active','Spatial Audio','Résistant eau'], desc:'AirPods Pro 2ème génération.'},
+            { id:'s20', page:'divers',   title:'Samsung Galaxy Watch',sub:'46mm GPS',       price:85000,  filter:'gadget',    badge:'cyan',   badgeText:'Samsung',     image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600', features:['GPS intégré','Cardio','Waterproof'], desc:'Galaxy Watch 46mm.'},
+            { id:'s21', page:'divers',   title:'Camera Sony A6400',sub:'24.2MP APS-C',      price:350000, filter:'electronique',badge:'orange',badgeText:'Sony',        image:'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600', features:['4K Video','AF rapide','Compact'], desc:'Appareil photo Sony A6400.'},
+
+            // Autres
+            { id:'s22', page:'autres',   title:'Cours Photographie',sub:'Débutant & Pro',   price:35000,  filter:'service',   badge:'green',  badgeText:'Formation',   image:'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600', features:['10 séances','Certificat','Matériel inclus'], desc:'Formation photographie complète.'},
+            { id:'s23', page:'autres',   title:'Pack iPhone + Coque',sub:'Bundle Deal',     price:110000, filter:'offre',     badge:'pink',   badgeText:'Bundle',      image:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600', features:['iPhone XR 64Go','Coque premium','Verre trempé'], desc:'Bundle spécial iPhone XR avec accessoires.'},
+        ];
+
+        // =====================================================
+        //  DATA STORE (localStorage)
+        // =====================================================
+        function getData() {
+            const raw = localStorage.getItem('jeliko_items');
+            if (!raw) {
+                localStorage.setItem('jeliko_items', JSON.stringify(SEED));
+                return [...SEED];
+            }
+            return JSON.parse(raw);
+        }
+        function saveData(items) {
+            localStorage.setItem('jeliko_items', JSON.stringify(items));
+        }
+        function getItems(page, filter='all') {
+            const all = getData().filter(d => d.page === page);
+            if (filter === 'all') return all;
+            return all.filter(d => d.filter === filter);
+        }
+        function deleteItem(id) {
+            const items = getData().filter(i => i.id !== id);
+            saveData(items);
+        }
+
+        // =====================================================
+        //  RENDER CARDS
+        // =====================================================
+        const pageGrids = {
+            iphones:   { grid:'grid-iphones',   filtersId:'iphone-filters' },
+            computers: { grid:'grid-computers',  filtersId:'computer-filters' },
+            homes:     { grid:'grid-homes',      filtersId:'home-filters' },
+            divers:    { grid:'grid-divers',     filtersId:'divers-filters' },
+            autres:    { grid:'grid-autres',     filtersId:'autres-filters' },
+        };
+
+        let adminMode = false; // set based on admin panel open state
+
+        function renderGrid(page, filter='all') {
+            const cfg = pageGrids[page];
+            if (!cfg) return;
+            const grid = document.getElementById(cfg.grid);
+            const items = getItems(page, filter);
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>Aucune annonce</h3>
+                        <p>Aucun article dans cette catégorie pour l'instant. Ajoutez-en via le panneau Admin !</p>
+                        <button class="btn-primary" onclick="openAdmin('${page}')">
+                            <i class="fas fa-plus"></i> Ajouter une annonce
+                        </button>
+                    </div>`;
+                return;
+            }
+
+            items.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'product-card glass fade-slide-up';
+                card.style.animationDelay = (idx * 60) + 'ms';
+
+                const priceLabel = page === 'homes' && item.type === 'rent'
+                    ? `${item.price.toLocaleString()} FCFA/mois`
+                    : `${item.price.toLocaleString()} FCFA`;
+
+                const badgeClass = item.badge || 'orange';
+                const badgeText  = item.badgeText || 'Top';
+
+                const featuresHtml = (item.features || []).map(f =>
+                    `<div class="card-feature"><i class="fas fa-check"></i><span>${f}</span></div>`
+                ).join('');
+
+                const imgHtml = item.image
+                    ? `<img src="${item.image}" alt="${item.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                       <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:3rem;background:rgba(255,255,255,0.05);">📦</div>`
+                    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:rgba(255,255,255,0.05);">📦</div>`;
+
+                card.innerHTML = `
+                    <div class="card-admin-controls">
+                        <button class="btn-icon edit" title="Modifier" onclick="editItem('${item.id}')"><i class="fas fa-pen"></i></button>
+                        <button class="btn-icon danger" title="Supprimer" onclick="confirmDelete('${item.id}','${page}','${filter}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="card-img-wrap">${imgHtml}</div>
+                    <div class="card-badge ${badgeClass}">${badgeText}</div>
+                    <div class="card-body">
+                        <div class="card-title">${item.title}</div>
+                        ${item.sub ? `<div class="card-sub">${item.sub}</div>` : ''}
+                        <div class="card-price">${priceLabel}</div>
+                        <div class="card-features">${featuresHtml}</div>
+                        <div class="card-actions">
+                            <button class="btn-primary" onclick="showDetail('${item.id}')">
+                                <i class="fas fa-info-circle"></i> Voir Détails
+                            </button>
+                        </div>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        // All pages active filters state
+        const activeFilters = {};
+
+        function renderAllGrids() {
+            Object.keys(pageGrids).forEach(page => {
+                renderGrid(page, activeFilters[page] || 'all');
+            });
+        }
+
+        // =====================================================
+        //  FILTER BUTTONS
+        // =====================================================
+        function initFilters() {
+            Object.entries(pageGrids).forEach(([page, cfg]) => {
+                const bar = document.getElementById(cfg.filtersId);
+                if (!bar) return;
+                bar.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', e => {
+                        bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        e.currentTarget.classList.add('active');
+                        const f = e.currentTarget.dataset.filter;
+                        activeFilters[page] = f;
+                        renderGrid(page, f);
+                    });
+                });
+            });
+        }
+
+        // =====================================================
+        //  PAGE ROUTER
+        // =====================================================
+        let currentPage = 'iphones';
+
+        function navigateTo(page) {
+            // hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+            document.getElementById('page-' + page).classList.add('active');
+            document.getElementById('tab-' + page).classList.add('active');
+            currentPage = page;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // render grid for this page (if applicable)
+            if (pageGrids[page]) {
+                renderGrid(page, activeFilters[page] || 'all');
+            }
+        }
+
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => navigateTo(tab.dataset.page));
+        });
+
+        // =====================================================
+        //  PRODUCT DETAIL MODAL
+        // =====================================================
+        function showDetail(id) {
+            const item = getData().find(i => i.id === id);
+            if (!item) return;
+
+            const priceLabel = item.page === 'homes' && item.type === 'rent'
+                ? `${item.price.toLocaleString()} FCFA/mois`
+                : `${item.price.toLocaleString()} FCFA`;
+
+            const featuresHtml = (item.features || []).map(f =>
+                `<div style="display:flex;align-items:center;gap:10px;"><i class="fas fa-check-circle" style="color:#34D399;font-size:1rem;"></i><span>${f}</span></div>`
+            ).join('');
+
+            document.getElementById('modalInner').innerHTML = `
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                    ${item.image ? `<img src="${item.image}" alt="${item.title}" class="modal-img" style="margin-bottom:24px;">` : `<div style="height:280px;width:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;background:rgba(255,255,255,0.05);border-radius:20px;margin-bottom:24px;">📦</div>`}
+                    <div style="text-align:center;width:100%;">
+                        <div style="font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#10B981,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;">${priceLabel}</div>
+                        <div style="opacity:0.6;margin-bottom:20px;">Prix négociable</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+                            <a href="tel:+221774688656" class="btn-primary"><i class="fas fa-phone"></i> Appeler</a>
+                            <a href="https://wa.me/221761967208?text=Intéressé par ${encodeURIComponent(item.title)} à ${item.price.toLocaleString()} FCFA" class="btn-secondary"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 style="font-size:2rem;font-weight:900;margin-bottom:8px;">${item.title} ${item.sub ? '– ' + item.sub : ''}</h2>
+                    ${item.desc ? `<p style="opacity:0.75;margin-bottom:20px;line-height:1.6;">${item.desc}</p>` : ''}
+                    ${featuresHtml.length > 0 ? `<div class="glass" style="border-radius:16px;padding:20px;margin-top:16px;display:flex;flex-direction:column;gap:12px;"><h3 style="font-size:1rem;font-weight:700;margin-bottom:4px;"><i class="fas fa-star" style="color:#FBBF24;"></i> Caractéristiques</h3>${featuresHtml}</div>` : ''}
+                </div>`;
+
+            document.getElementById('productModal').classList.add('shown');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('productModal').addEventListener('click', e => {
+            if (e.target === document.getElementById('productModal')) closeModal();
+        });
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('shown');
+            document.body.style.overflow = '';
+        }
+
+        // =====================================================
+        //  ADMIN PANEL
+        // =====================================================
+        const adminPanel  = document.getElementById('adminPanel');
+        const adminOvl    = document.getElementById('adminOverlay');
+
+        function openAdmin(targetPage) {
+            adminPanel.classList.add('open');
+            adminOvl.classList.add('shown');
+            document.body.style.overflow = 'hidden';
+            if (targetPage && document.getElementById('admin-page')) {
+                document.getElementById('admin-page').value = targetPage;
+            }
+            renderManageList('all');
+        }
+        function closeAdmin() {
+            adminPanel.classList.remove('open');
+            adminOvl.classList.remove('shown');
+            document.body.style.overflow = '';
+        }
+
+        // document.getElementById('openAdminBtn').addEventListener('click', () => openAdmin(currentPage));
+        // document.getElementById('closeAdminBtn').addEventListener('click', closeAdmin);
+        // adminOvl.addEventListener('click', closeAdmin);
+
+        // Admin tabs
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('atab-' + tab.dataset.atab).classList.add('active');
+                if (tab.dataset.atab === 'manage') renderManageList('all');
+            });
+        });
+
+        // Badge selector
+        let selectedBadge = 'orange';
+        document.querySelectorAll('.badge-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.badge-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedBadge = opt.dataset.badge;
+            });
+        });
+
+        // Save card
+        document.getElementById('saveCardBtn').addEventListener('click', saveCard);
+
+        let editingId = null;
+
+        function saveCard() {
+            const title    = document.getElementById('admin-title').value.trim();
+            const sub      = document.getElementById('admin-sub').value.trim();
+            const price    = parseInt(document.getElementById('admin-price').value);
+            const page     = document.getElementById('admin-page').value;
+            const filter   = document.getElementById('admin-filter').value.trim();
+            const img      = document.getElementById('admin-img').value.trim();
+            const desc     = document.getElementById('admin-desc').value.trim();
+            const badgeText= document.getElementById('admin-badge-text').value.trim();
+            const featRaw  = document.getElementById('admin-features').value.trim();
+            const features = featRaw ? featRaw.split('\n').map(f=>f.trim()).filter(Boolean) : [];
+
+            if (!title) { showToast('Le titre est requis !', true); return; }
+            if (isNaN(price) || price <= 0) { showToast('Prix invalide !', true); return; }
+
+            const items = getData();
+
+            if (editingId) {
+                // Edit mode
+                const idx = items.findIndex(i => i.id === editingId);
+                if (idx > -1) {
+                    items[idx] = { ...items[idx], title, sub, price, page, filter, image:img, desc, badge:selectedBadge, badgeText, features };
+                    saveData(items);
+                    showToast('Annonce modifiée !');
+                }
+                editingId = null;
+                document.getElementById('saveCardBtn').innerHTML = '<i class="fas fa-save"></i> Enregistrer l\'annonce';
+            } else {
+                const newItem = {
+                    id: 'u_' + Date.now(),
+                    page, title, sub, price, filter,
+                    image: img, desc,
+                    badge: selectedBadge,
+                    badgeText: badgeText || 'Nouveau',
+                    features
+                };
+                items.push(newItem);
+                saveData(items);
+                showToast('Annonce ajoutée !');
+            }
+
+            // Clear form
+            ['admin-title','admin-sub','admin-price','admin-filter','admin-img','admin-desc','admin-badge-text','admin-features']
+                .forEach(id => { document.getElementById(id).value = ''; });
+            selectedBadge = 'orange';
+            document.querySelectorAll('.badge-option').forEach(o => o.classList.remove('selected'));
+            document.querySelector('.badge-option.orange').classList.add('selected');
+
+            renderGrid(page, activeFilters[page] || 'all');
+            renderManageList('all');
+        }
+
+        // Edit item
+        function editItem(id) {
+            const item = getData().find(i => i.id === id);
+            if (!item) return;
+
+            editingId = id;
+            document.getElementById('admin-page').value     = item.page;
+            document.getElementById('admin-title').value    = item.title;
+            document.getElementById('admin-sub').value      = item.sub || '';
+            document.getElementById('admin-price').value    = item.price;
+            document.getElementById('admin-filter').value   = item.filter || '';
+            document.getElementById('admin-img').value      = item.image || '';
+            document.getElementById('admin-desc').value     = item.desc || '';
+            document.getElementById('admin-badge-text').value = item.badgeText || '';
+            document.getElementById('admin-features').value = (item.features || []).join('\n');
+
+            selectedBadge = item.badge || 'orange';
+            document.querySelectorAll('.badge-option').forEach(o => {
+                o.classList.toggle('selected', o.dataset.badge === selectedBadge);
+            });
+
+            document.getElementById('saveCardBtn').innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+
+            // Switch to add tab
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-atab="add"]').classList.add('active');
+            document.getElementById('atab-add').classList.add('active');
+
+            openAdmin();
+        }
+
+        // Delete
+        function confirmDelete(id, page, filter) {
+            if (!confirm('Supprimer cette annonce ?')) return;
+            deleteItem(id);
+            renderGrid(page, activeFilters[page] || 'all');
+            renderManageList('all');
+            showToast('Annonce supprimée !');
+        }
+
+        // Manage list
+        let manageCatFilter = 'all';
+        document.querySelectorAll('.cat-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                manageCatFilter = pill.dataset.cat;
+                renderManageList(manageCatFilter);
+            });
+        });
+
+        function renderManageList(cat) {
+            const list = document.getElementById('adminItemList');
+            let items = getData();
+            if (cat !== 'all') items = items.filter(i => i.page === cat);
+
+            if (items.length === 0) {
+                list.innerHTML = '<div style="text-align:center;opacity:0.5;padding:40px;">Aucune annonce</div>';
+                return;
+            }
+
+            list.innerHTML = '';
+            items.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'admin-item';
+                el.innerHTML = `
+                    ${item.image
+                        ? `<img src="${item.image}" class="admin-item-img" alt="${item.title}" onerror="this.style.display='none';">`
+                        : `<div class="admin-item-img-placeholder">📦</div>`
+                    }
+                    <div class="admin-item-info">
+                        <div class="admin-item-name">${item.title}</div>
+                        <div class="admin-item-meta">${pageEmoji(item.page)} ${item.page} ${item.filter ? '· ' + item.filter : ''}</div>
+                        <div class="admin-item-price">${item.price.toLocaleString()} FCFA</div>
+                    </div>
+                    <div class="admin-item-actions">
+                        <button class="btn-icon edit" onclick="editItem('${item.id}')"><i class="fas fa-pen"></i></button>
+                        <button class="btn-icon danger" onclick="confirmDelete('${item.id}','${item.page}','${activeFilters[item.page]||'all'}')"><i class="fas fa-trash"></i></button>
+                    </div>`;
+                list.appendChild(el);
+            });
+        }
+
+        function pageEmoji(page) {
+            return { iphones:'📱', computers:'💻', homes:'🏠', divers:'🎁', autres:'✨' }[page] || '•';
+        }
+
+        // =====================================================
+        //  TOAST
+        // =====================================================
+        let toastTimer;
+        function showToast(msg, isError=false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.className = isError ? 'error show' : 'show';
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.className = ''; }, 3000);
+        }
+
+        // =====================================================
+        //  INIT
+        // =====================================================
+        initFilters();
+        renderAllGrids();
+        navigateTo('iphones');
+    </script>
+</body>
+
+</html>
