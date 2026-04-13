@@ -178,6 +178,110 @@
         .nav-tab .tab-emoji { font-size: 1rem; }
         .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer;
+            padding: 8px; width: 44px; height: 44px;
+            align-items: center; justify-content: center;
+        }
+        .menu-toggle span {
+            width: 24px; height: 2.5px; background: white;
+            border-radius: 2px; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            display: block;
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile menu dropdown */
+        .nav-tabs.mobile-open {
+            display: flex !important;
+            flex-direction: column;
+            position: fixed; top: 80px; left: 0; right: 0;
+            background: rgba(15, 23, 42, 0.99);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 0;
+            gap: 0;
+            justify-content: flex-start;
+            border-radius: 0;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            z-index: 998;
+            animation: slideDown 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-tabs.mobile-open .nav-tab {
+            width: 100%;
+            justify-content: flex-start;
+            padding: 16px 24px;
+            border-radius: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.75);
+            background: transparent;
+            transition: all 0.25s ease;
+        }
+
+        .nav-tabs.mobile-open .nav-tab:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            padding-left: 32px;
+        }
+
+        .nav-tabs.mobile-open .nav-tab.active {
+            background: linear-gradient(90deg, rgba(59,130,246,0.3), transparent);
+            color: white;
+            border-left: 3px solid #3B82F6;
+            padding-left: 21px;
+            box-shadow: inset 0 0 20px rgba(59,130,246,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            
+            .nav-tabs {
+                display: none !important;
+                flex: none;
+                padding: 0;
+                gap: 0;
+                overflow: visible;
+            }
+
+            .nav-inner {
+                justify-content: space-between;
+                gap: 16px;
+            }
+
+            .logo-wrap {
+                gap: 8px;
+                min-width: 0;
+                flex-shrink: 1;
+            }
+
+            .logo-text-main { font-size: 0.95rem; letter-spacing: 0; }
+            .logo-text-sub { font-size: 0.5rem; }
+
+            .logo-image {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
         /* ========================
            PAGE LAYOUT
         ======================== */
@@ -526,7 +630,7 @@
             </div>
 
             <div class="nav-tabs" id="navTabs">
-                <button class="nav-tab active" data-page="iphones" id="tab-iphones">
+                <button class="nav-tab " data-page="iphones" id="tab-iphones">
                     <span class="tab-emoji"></span><span class="tab-label">iPhones</span>
                 </button>
                 <button class="nav-tab" data-page="computers" id="tab-computers">
@@ -545,6 +649,12 @@
                     <span class="tab-emoji">📞</span><span class="tab-label">Contact</span>
                 </button>
             </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
             <!-- <div class="nav-right">
                 <button class="btn-glass" id="openAdminBtn" title="Panneau Admin">
@@ -1039,8 +1149,44 @@
         }
 
         document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => navigateTo(tab.dataset.page));
+            tab.addEventListener('click', function() {
+                navigateTo(this.dataset.page);
+                // Close mobile menu after navigation
+                menuToggle.classList.remove('active');
+                navTabs.classList.remove('mobile-open');
+            });
         });
+
+        // =====================================================
+        //  HAMBURGER MENU (MOBILE)
+        // =====================================================
+        const menuToggle = document.getElementById('menuToggle');
+        const navTabs = document.getElementById('navTabs');
+
+        if (menuToggle && navTabs) {
+            // Toggle menu on hamburger click
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menuToggle.classList.toggle('active');
+                navTabs.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside nav area
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('nav#topNav')) {
+                    menuToggle.classList.remove('active');
+                    navTabs.classList.remove('mobile-open');
+                }
+            });
+
+            // Close menu when window resizes back to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    menuToggle.classList.remove('active');
+                    navTabs.classList.remove('mobile-open');
+                }
+            });
+        }
 
         // =====================================================
         //  PRODUCT DETAIL MODAL
